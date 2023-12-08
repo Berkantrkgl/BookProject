@@ -8,6 +8,8 @@ const port = 3000;
 app.use(express.static("public"));
 
 
+// For the query for API http://covers.openlibrary.org/api/query
+
 
 // Get home page 
 app.get("/", (req, res) => {
@@ -28,6 +30,16 @@ app.get("/take-note", (req, res) => {
 app.get("/rate", (req, res) => {
     res.render("rate.ejs");
 });
+
+// Delete note 
+app.get("/delete", (req, res) => {
+
+})
+
+// Search note 
+app.get("/search", (req, res) => {
+    
+})
 
 // Running server 
 app.listen(port, () => {
