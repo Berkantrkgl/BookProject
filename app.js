@@ -94,8 +94,19 @@ app.get("/rate", (req, res) => {
 
 
 // Search note 
-app.get("/search", (req, res) => {
-
+app.get("/search", async (req, res) => {
+    try {
+        const searchQuery = req.query.query;
+        console.log(searchQuery);
+        const result = await db.query(
+            "SELECT * FROM covers WHERE  LOWER(name) LIKE '%'||$1||'%' OR isbn LIKE $1||'%'"
+            , [searchQuery]);
+        res.render("index.ejs", {
+            books: result.rows,
+        })
+    } catch (error) {
+        console.log("Failed to make request:", error.message);   
+    }
 })
 
 
