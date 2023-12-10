@@ -1,6 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import axios from "axios";
+import pg from "pg";
 
 const app = express();
 const port = 3000;
@@ -9,9 +10,17 @@ const port = 3000;
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 
+const db = new pg.Client({
+    user: 'postgres',
+    host: 'localhost',
+    database: 'BookProject',
+    password: 'Berkan188138',
+    port: 5432,
+})
 
+db.connect();
 
-const API_URL = "http://covers.openlibrary.org/api";
+const API_URL = "https://covers.openlibrary.org/b/isbn/";
 
 // For the query for API http://covers.openlibrary.org/api/query
 
@@ -52,11 +61,19 @@ app.post("/addNote", async (req, res) => {
     const isbn = req.body.isbn;
     const rating = req.body.rating;
     const notes = req.body.notes;
+    // https://covers.openlibrary.org/b/$key/$value-$size.jpg to acces book covers
+    const url = API_URL + isbn + ".json";
 
     try {
-        const response = await axios.get("http://covers.openlibary.org/api/query?isbn=9780385533225");
-        const result = response.data;
-        console.log(result);
+        const response = await axios.get(url);
+        res.render("index.ejs", {
+            bookName: bookName,
+            isbn: isbn,
+            rating: rating,
+            notes: notes,
+            image_url: response.data.source_url,
+        });
+
     } catch (error) {
         console.error("Failed to make request:", error.message);
     }

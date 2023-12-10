@@ -1,4 +1,5 @@
 <div class="container col-xxl-8 px-4 py-5">
+    <hr>
 
     <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
         <div class="col-8 col-sm-6 col-lg-4 d-flex justify-content-center">
@@ -6,12 +7,21 @@
         </div>
         <div class="col-lg-8">
           <h1 class="display-10 fw-bold d-flex justify-content-lg-start">Harry Potter and the Philosopher's Stone</h1>
+          <div class="d-flex justify-content-between mb-3 ">
+            <small class="text-muted fw-bold ">ISBN Number : 9780385533225</small>
+            <small class="text-muted fw-bold ">Rating 10/10</small>
+          </div>
           <p class="lead">Quickly design and customize responsive mobile-first sites with Bootstrap, the world’s most popular front-end open source toolkit, featuring Sass variables and mixins, responsive grid system, extensive prebuilt components, and powerful JavaScript plugins.</p>
           <div class="d-grid gap-2 d-md-flex justify-content-md-start">
             <a href="/note-detail"><button type="button" class="glow-on-hover custom-btn">View Detail</button></a>
           </div>
         </div>
     </div>
+
+    <small class="text-muted fw-bold ">Image url : <%= locals.image_url %></small>
+    <small class="text-muted fw-bold ">Book name : <%= locals.bookName %></small>
+    <small class="text-muted fw-bold ">rate : <%= locals.rating %></small>
+    <small class="text-muted fw-bold ">Book notes : <%= locals.notes %></small>
       <hr class="hr-style">
 
     <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
