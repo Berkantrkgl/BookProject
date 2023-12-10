@@ -10,26 +10,26 @@
 </head>
 <body>
     <%- include("partials/header.ejs") %>
-
     <div class="container col-xxl-8 px-4 py-5">
-        <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
-            <div class="col-7 col-sm-5 col-lg-3 d-flex justify-content-end">
-                <img src="https://covers.openlibrary.org/b/isbn/9780385533225-L.jpg" class="" alt="Bootstrap Themes" height="300" loading="lazy">
+        <div class="row justify-content-md-center">
+            <div class="col-sm-10 col-lg-9 d-flex justify-content-between mb-5">
+                <div class="row">
+                    <div class="col-lg-11">
+                        <h1 class="display-5 fw-bold text-body-emphasis lh-1 mb-3 d-flex align-self-center mt-5"><%= book.name %></h1>
+                    </div>
+                    <div class="d-flex gap-2 align-self-end">
+                        <a href="/edit"><button type="button" class="glow-on-hover custom-btn ">Edit Note</button></a>
+                        <a href="/rate"><button type="button" class="glow-on-hover custom-btn ">Rate</button></a> 
+                        <a href="/delete"><button type="button" class="glow-on-hover custom-btn ">Delete</button></a>                       
+                    </div>
+                </div>
+                <img src="<%= book.image_url %>" class="mb-5 ml-2" alt="Bootstrap Themes" height="300" loading="lazy">
             </div>
             <div class="col-lg-9">
-                <h1 class="display-5 fw-bold text-body-emphasis lh-1 mb-3">Responsive left-aligned hero with image</h1>
-                <p class="lead">Quickly design and customize responsive mobile-first sites with Bootstrap, the world’s most popular front-end open source toolkit, featuring Sass variables and mixins, responsive grid system, extensive prebuilt components, and powerful JavaScript plugins.</p>
-                <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-                    <a href="/edit"><button type="button" class="glow-on-hover custom-btn ">Edit Note</button></a>
-                    <a href="/rate"><button type="button" class="glow-on-hover custom-btn ">Rate</button></a> 
-                    <a href="/delete"><button type="button" class="glow-on-hover custom-btn ">Delete</button></a>                       
-                </div>
-            </div>
+                <p class="lead"><%= book.notes %></p>
+            </div> 
         </div>
     </div>
-
-
-
     <%- include("partials/footer.ejs") %>
 </body>
 </html>

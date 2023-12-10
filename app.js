@@ -28,24 +28,22 @@ const API_URL = "https://covers.openlibrary.org/b/isbn/";
 // Get home page 
 app.get("/", async (req, res) => {
     try {
-        const query = await db.query("SELECT * FROM covers");
-        console.log(query.rows)
+        const query = await db.query("SELECT * FROM covers ORDER BY id DESC");
+        res.render("index.ejs", {
+            books: query.rows,
+        });
+
         } catch (error) {
         console.log("Failed to make request (select):", error.message)
     }
-    res.render("index.ejs");
 });
 
 // Add new note
-app.post("/addNote", async (req, res) => {
-  
-    
+app.post("/addNote", async (req, res) => { 
     try {
         const query_url = API_URL + req.body.isbn + ".json";
         const response = await axios.get(query_url);
         const image_url = response.data.source_url;
-        console.log(response.data.source_url);
-
         await db.query(
             "INSERT INTO covers(name, isbn, rating, notes, image_url) VALUES ($1, $2, $3, $4, $5)",
             [req.body.bookName, req.body.isbn, parseInt(req.body.rating), req.body.notes, image_url]
@@ -58,8 +56,20 @@ app.post("/addNote", async (req, res) => {
 })
 
 // Read Notes page
-app.get("/note-detail", (req, res) => {
-    res.render("note-detail.ejs");
+app.get("/note-detail", async (req, res) => {
+    try {
+        const id = req.query.id;
+        const result = await db.query(
+            "SELECT * FROM covers WHERE id = ($1)", [id]
+        );
+        console.log(result.rows[0])
+        res.render("note-detail.ejs", {
+            book: result.rows[0],
+        });
+    } catch (error) {
+        
+    }
+   
 });
 
 // Take Notes page
