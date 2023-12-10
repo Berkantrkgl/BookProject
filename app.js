@@ -81,6 +81,35 @@ app.get("/delete", async (req, res) => {
     }
 });
 
+app.get("/edit", async (req, res) => {
+    try {
+        const id = req.query.id;
+        const result = await db.query("SELECT * FROM covers WHERE id = $1", [id]);
+        res.render("edit.ejs", {
+            book: result.rows[0],
+        });
+    } catch (error) {
+        console.log("Failed to make request:", error.message);
+    }
+})
+
+// Update db
+app.post("/update", async (req, res) => {
+    try {
+        const id = req.params.id;
+        console.log(id);
+        await db.query(
+            "UPDATE covers SET name=$1, isbn=$2, rating=$3, notes=$4 WHERE id = $5", 
+            [req.query.bookName, req.query.isbn, parseInt(req.query.rating), req.query.notes, parseInt(req.query.id)]);
+        
+        res.redirect(`/note-detail?id=${id}`);
+
+    } catch (error) {
+        console.log("Failed to make request:", error.message);
+
+    }
+})
+
 // Take Notes page
 app.get("/take-note", (req, res) => {
     res.render("take-note.ejs");
@@ -90,8 +119,6 @@ app.get("/take-note", (req, res) => {
 app.get("/rate", (req, res) => {
     res.render("rate.ejs");
 });
-
-
 
 // Search note 
 app.get("/search", async (req, res) => {
