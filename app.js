@@ -62,14 +62,23 @@ app.get("/note-detail", async (req, res) => {
         const result = await db.query(
             "SELECT * FROM covers WHERE id = ($1)", [id]
         );
-        console.log(result.rows[0])
         res.render("note-detail.ejs", {
             book: result.rows[0],
         });
     } catch (error) {
-        
+        console.log("Failed to make request:", error.message);   
     }
-   
+});
+
+// Delete from database
+app.get("/delete", async (req, res) => {
+    try {
+        const id = req.query.id;
+        await db.query("DELETE FROM covers WHERE id = $1", [id]);
+        res.redirect("/");
+    } catch (error) {
+        console.log("Failed to make request:", error.message);
+    }
 });
 
 // Take Notes page
@@ -82,10 +91,7 @@ app.get("/rate", (req, res) => {
     res.render("rate.ejs");
 });
 
-// Delete note 
-app.get("/delete", (req, res) => {
 
-})
 
 // Search note 
 app.get("/search", (req, res) => {
