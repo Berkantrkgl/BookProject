@@ -26,9 +26,36 @@ const API_URL = "https://covers.openlibrary.org/b/isbn/";
 
 
 // Get home page 
-app.get("/", (req, res) => {
+app.get("/", async (req, res) => {
+    try {
+        const query = await db.query("SELECT * FROM covers");
+        console.log(query.rows)
+        } catch (error) {
+        console.log("Failed to make request (select):", error.message)
+    }
     res.render("index.ejs");
 });
+
+// Add new note
+app.post("/addNote", async (req, res) => {
+  
+    
+    try {
+        const query_url = API_URL + req.body.isbn + ".json";
+        const response = await axios.get(query_url);
+        const image_url = response.data.source_url;
+        console.log(response.data.source_url);
+
+        await db.query(
+            "INSERT INTO covers(name, isbn, rating, notes, image_url) VALUES ($1, $2, $3, $4, $5)",
+            [req.body.bookName, req.body.isbn, parseInt(req.body.rating), req.body.notes, image_url]
+        );
+        res.redirect("/");
+
+    } catch (error) {
+        console.error("Failed to make request: (insert)", error.message);
+    }
+})
 
 // Read Notes page
 app.get("/note-detail", (req, res) => {
@@ -55,31 +82,7 @@ app.get("/search", (req, res) => {
 
 })
 
-// Add new note
-app.post("/addNote", async (req, res) => {
-    const bookName = req.body.bookName;
-    const isbn = req.body.isbn;
-    const rating = req.body.rating;
-    const notes = req.body.notes;
-    // https://covers.openlibrary.org/b/$key/$value-$size.jpg to acces book covers
-    const url = API_URL + isbn + ".json";
 
-    try {
-        const response = await axios.get(url);
-        res.render("index.ejs", {
-            bookName: bookName,
-            isbn: isbn,
-            rating: rating,
-            notes: notes,
-            image_url: response.data.source_url,
-        });
-
-    } catch (error) {
-        console.error("Failed to make request:", error.message);
-    }
-    
-
-})
 
 // Running server 
 app.listen(port, () => {

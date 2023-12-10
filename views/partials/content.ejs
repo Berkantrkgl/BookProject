@@ -3,7 +3,7 @@
 
     <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
         <div class="col-8 col-sm-6 col-lg-4 d-flex justify-content-center">
-          <a href="/note-detail"><img src="https://covers.openlibrary.org/b/isbn/9780385533225-L.jpg" class="" alt="Bootstrap Themes" height="300" loading="lazy"></a>
+          <a href="/note-detail"><img src="<%= locals.image_url %>" class="" alt="Bootstrap Themes" height="300" loading="lazy"></a>
         </div>
         <div class="col-lg-8">
           <h1 class="display-10 fw-bold d-flex justify-content-lg-start">Harry Potter and the Philosopher's Stone</h1>
@@ -17,11 +17,8 @@
           </div>
         </div>
     </div>
-
-    <small class="text-muted fw-bold ">Image url : <%= locals.image_url %></small>
-    <small class="text-muted fw-bold ">Book name : <%= locals.bookName %></small>
-    <small class="text-muted fw-bold ">rate : <%= locals.rating %></small>
-    <small class="text-muted fw-bold ">Book notes : <%= locals.notes %></small>
+      <img src="<%= locals.image_url %>" alt="">
+      <p><%= locals.image_url %></p>
       <hr class="hr-style">
 
     <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
