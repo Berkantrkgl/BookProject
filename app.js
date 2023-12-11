@@ -96,14 +96,21 @@ app.get("/edit", async (req, res) => {
 // Update db
 app.post("/update", async (req, res) => {
     try {
-        const id = req.params.id;
-        console.log(id);
-        await db.query(
-            "UPDATE covers SET name=$1, isbn=$2, rating=$3, notes=$4 WHERE id = $5", 
-            [req.query.bookName, req.query.isbn, parseInt(req.query.rating), req.query.notes, parseInt(req.query.id)]);
-        
-        res.redirect(`/note-detail?id=${id}`);
+        const id = parseInt(req.body.id);
+        const bookName = String(req.body.bookName);
+        const isbn = String(req.body.isbn);
+        const rating = parseInt(req.body.rating);
+        const notes = String(req.body.notes);
 
+        const query_url = API_URL + isbn + ".json";
+        const response = await axios.get(query_url);
+        const image_url = response.data.source_url;
+        console.log(id)
+        await db.query(
+            "UPDATE covers SET name = $1, isbn = $2, rating = $3, notes = $4, image_url = $5 WHERE id = $6",
+            [bookName, isbn, rating, notes, image_url, id]
+        )
+        res.redirect(`/note-detail?id=${id}`);
     } catch (error) {
         console.log("Failed to make request:", error.message);
 
