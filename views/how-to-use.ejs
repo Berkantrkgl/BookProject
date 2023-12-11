@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">  
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/button.css">
+    <title>Ma Books</title>
+</head>
+<body>
+    <%- include("partials/header.ejs") %>
+
+    <div class="container col-xxl-10 pt-5 d-flex justify-content-center">
+        <div class="align-self-center">
+            <h1 class="display-5 fw-bold lh-1 mb-3">How Can You Use This Web Site</h1>
+        </div>  
+    </div>
+
+    <div class="container my-5">
+        <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
+          <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
+            <h1 class="display-6 fw-bold lh-1 text-body-emphasis">You can add the books you read </h1>
+            <p class="lead">You can use this site to see the books you have read before and to easily see their reviews.</p>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3">
+                <a href="/take-note"><button type="button" class="glow-on-hover custom-btn ">Add Note</button></a>                       
+            </div>
+          </div>
+          <div class="col-lg-4 offset-lg-1 pb-5 overflow-hidden">
+              <a href="/take-note"><img class="rounded-lg-3 pb-2" src="images/add-button.png" width="200"></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="container my-5">
+        <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
+          <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
+            <h1 class="display-6 fw-bold lh-1 text-body-emphasis">You can automatically add book covers by ISBN number</h1>
+            <p class="lead">You can select the covers of the books you want to add according to the ISBN number you entered. This process will occur if the book is active on the Open Library API.</p>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3">
+                <a href="/take-note"><button type="button" class="glow-on-hover custom-btn ">Add Note</button></a>                       
+            </div>
+          </div>
+          <div class="col-lg-4 offset-lg-1 pb-5 overflow-hidden">
+              <a href="/take-note"><img class="rounded-lg-3 pb-2" src="images/book.png" width="200"></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="container my-5">
+        <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
+          <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
+            <h1 class="display-6 fw-bold lh-1 text-body-emphasis">Rate the books with points</h1>
+            <p class="lead">Give a score out of 10 to easily see whether you like or dislike the books you entered.</p>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3">
+                <a href="/take-note"><button type="button" class="glow-on-hover custom-btn ">Add Note</button></a>                       
+            </div>
+          </div>
+          <div class="col-lg-4 offset-lg-1 pb-5 overflow-hidden">
+              <a href="/take-note"><img class="rounded-lg-3 pb-2" src="images/rate.png" width="200"></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="container my-5">
+        <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
+          <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
+            <h1 class="display-6 fw-bold lh-1 text-body-emphasis">Search within books</h1>
+            <p class="lead">You can search the books you entered by ISBN number or book title</p>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3">
+                <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3 d-flex" action="/search" method="GET">
+                    <input type="search" class="form-control form-control-dark" name="query" placeholder="Search...">
+                    <button type="submit" class="glow-on-hover custom-btn py-0" style="margin-top: 0; margin-bottom: 0;">Search</button>
+                </form>           
+            </div>
+          </div>
+          <div class="col-lg-4 offset-lg-1 pb-5 overflow-hidden">
+            <img class="rounded-lg-3 pb-2" src="images/search.png" width="200">
+          </div>
+        </div>
+      </div>
+
+    <%- include("partials/footer.ejs") %>
+</body>
+</html>

@@ -22,9 +22,6 @@ db.connect();
 
 const API_URL = "https://covers.openlibrary.org/b/isbn/";
 
-// For the query for API http://covers.openlibrary.org/api/query
-
-
 // Get home page 
 app.get("/", async (req, res) => {
     try {
@@ -32,9 +29,8 @@ app.get("/", async (req, res) => {
         res.render("index.ejs", {
             books: query.rows,
         });
-
         } catch (error) {
-        console.log("Failed to make request (select):", error.message)
+        console.log("Failed to make request (select all):", error.message)
     }
 });
 
@@ -49,13 +45,12 @@ app.post("/addNote", async (req, res) => {
             [req.body.bookName, req.body.isbn, parseInt(req.body.rating), req.body.notes, image_url]
         );
         res.redirect("/");
-
     } catch (error) {
-        console.error("Failed to make request: (insert)", error.message);
+        console.error("Failed to make request: (insert into)", error.message);
     }
 })
 
-// Read Notes page
+// Get book detail
 app.get("/note-detail", async (req, res) => {
     try {
         const id = req.query.id;
@@ -81,6 +76,7 @@ app.get("/delete", async (req, res) => {
     }
 });
 
+// Get book detail by id for editing
 app.get("/edit", async (req, res) => {
     try {
         const id = req.query.id;
@@ -105,7 +101,6 @@ app.post("/update", async (req, res) => {
         const query_url = API_URL + isbn + ".json";
         const response = await axios.get(query_url);
         const image_url = response.data.source_url;
-        console.log(id)
         await db.query(
             "UPDATE covers SET name = $1, isbn = $2, rating = $3, notes = $4, image_url = $5 WHERE id = $6",
             [bookName, isbn, rating, notes, image_url, id]
@@ -113,7 +108,6 @@ app.post("/update", async (req, res) => {
         res.redirect(`/note-detail?id=${id}`);
     } catch (error) {
         console.log("Failed to make request:", error.message);
-
     }
 })
 
@@ -131,16 +125,20 @@ app.get("/rate", (req, res) => {
 app.get("/search", async (req, res) => {
     try {
         const searchQuery = req.query.query;
-        console.log(searchQuery);
         const result = await db.query(
             "SELECT * FROM covers WHERE  LOWER(name) LIKE '%'||$1||'%' OR isbn LIKE $1||'%'"
-            , [searchQuery]);
+            , [searchQuery.toLowerCase()]);
         res.render("index.ejs", {
             books: result.rows,
         })
     } catch (error) {
         console.log("Failed to make request:", error.message);   
     }
+})
+
+// How to use page
+app.get("/using", (req, res) => {
+    res.render("how-to-use.ejs")
 })
 
 
