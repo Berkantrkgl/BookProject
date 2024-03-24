@@ -5,6 +5,8 @@ This project is a website created for people to share the books they like and re
 The purpose of the project is to create a chance to practice my knowledge in the process of learning Nodejs. I used Ejs and Bootstrap for Frontend throughout the project. In addition, I sent a request to the Open Library API with Axios and pulled the book covers according to their ISBN number. I saved the entered data to the PostgreSql database.
 
 
+<img src="https://github.com/Berkantrkgl/BookProject/blob/main/image" width="800">
+
 ## Getting Started
 
 ```
